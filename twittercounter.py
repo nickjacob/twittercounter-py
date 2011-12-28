@@ -5,10 +5,10 @@
 #
 # usage: http://github.com/nickjacob/twittercounter-py
 ######
-import tweepy
 from urllib2 import HTTPError,Request,urlopen,URLError
 from urllib import urlencode
 from simplejson import load
+from tweepy import OAuthHandler, API
 
 class API:
 	"""
@@ -34,8 +34,8 @@ class API:
 	def gen_id(self,screen_name):
 		""" returns the user id from twitter, to simplify calls to api
 		"""
-		auth = tweepy.OAuthHandler(self.twitter['consumer_key'],self.twitter['consumer_secret'])
-		api = tweepy.API(auth)
+		auth = OAuthHandler(self.twitter['consumer_key'],self.twitter['consumer_secret'])
+		api = API(auth)
 		try:
 			name = api.get_user(screen_name).id
 		except:
