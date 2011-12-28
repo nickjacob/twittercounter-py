@@ -14,7 +14,7 @@
 		api = twittercounter.API(api_key)
 		api.set_twitter_credentials(consumer_key,consumer_secret)
 
-  or to just use ID's:
+  .. or to just use ID's:
   
 		api = twittercounter.API(api_key)
 		
