@@ -26,6 +26,11 @@ class API:
 		self.TC_URL = 'http://api.twittercounter.com/'
 		self.lastCall = ''
 	
+	def set_twitter_credentials(consumer_key,consumer_secret):
+		""" mutator for twitter credentials so you don't have to instantiate with them
+		"""
+		self.twitter['consumer_key'] = consumer_key
+		self.twitter['consumer_secret'] = consumer_secret
 	def gen_id(self,screen_name):
 		""" returns the user id from twitter, to simplify calls to api
 		"""
