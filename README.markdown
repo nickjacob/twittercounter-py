@@ -10,9 +10,12 @@
 		
 		api = twittercounter.API(api_key,{'consumer_key':consumer_key,'consumer_secret':consumer_secret})
   .. or:
+
 		api = twittercounter.API(api_key)
 		api.set_twitter_credentials(consumer_key,consumer_secret)
+
   or to just use ID's:
+  
 		api = twittercounter.API(api_key)
 		
 2. call_api passing a screen name (if twitter credentials provided) or user id
