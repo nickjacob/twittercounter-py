@@ -24,7 +24,7 @@ class API:
 		self.twitter = twitter
 		self.api_key = api_key 
 		self.TC_URL = 'http://api.twittercounter.com/'
-		self.lastCall = ''
+		self.calls = {} # storage for calls
 	
 	def set_twitter_credentials(consumer_key,consumer_secret):
 		""" mutator for twitter credentials so you don't have to instantiate with them
@@ -48,19 +48,27 @@ class API:
 			doesn't make a new call if it's for the same screenname to reduce
 			API calls.
 		"""
-		if self.lastCall == user: return
-		self.lastCall = user 
-		print 'api call made'
 		if self.twitter: 
 			u_id = self.gen_id(user)
-		else: u_id = user
-		if u_id == 0: self.data = {'Error':'invalid username'}
+		else: 
+			u_id = user
+		
+		# minimize API calls - check if you already looked
+		if str(u_id) in self.calls: 
+			self.data = self.calls[str(u_id)]
+			return 
+		if u_id == 0: # is it a valid ID?
+			self.data = {'Error':'invalid username'}
+			return 
+		# now call the API
 		self.data = load(urlopen((self.TC_URL +'?'+urlencode({
 			'apikey':self.api_key,
 			'twitter_id':u_id
 		}))))
+		# an error in accessing twittercounter will result in data with an error.
 		if 'Error' in self.data: 
 			print 'Error in Accessing TwitterCounter API: '+self.data['Error']
+		self.calls[str(u_id)] = self.data
 
 	
 	def get_followers(self,screen_name):
